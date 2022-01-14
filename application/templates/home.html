@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row pt-5">
+    <div class="col">
+        <ul class="home_menu">
+            <li class="nav-item">
+                <a href="{{ url_for('routes.home') }}" class="nav-link {% if show == 'new' %}active{% endif %}">{% if
+                    show == 'new' %}>> {% endif %}New
+                    Prediction</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('routes.history') }}" class="nav-link {% if show != 'new' %}active{% endif %}">
+                    {% if show != 'new' %}>> {% endif %}Prediction History</a>
+            </li>
+        </ul>
+    </div>
+    {% if show == 'new' %}
+    <div class="col-10 col-md-8 col-lg-6 col-xl-4">
+        {{ render_flashes() }}
+        <form name="predictionForm" action="/predict" method="post">
+
+            <fieldset class="form-group">
+
+                <p>
+                    <button type="submit" class="btn btn-primary">Predict</button>
+                    <button type="reset" class="btn btn-warning">Clear</button>
+                </p>
+            </fieldset>
+        </form>
+    </div>
+    {% else %}
+    <div class="col-10 col-md-8">
+        {{ render_flashes() }}
+    </div>
+    {% endif %}
+    <div class="col"></div>
+</div>
+{% endblock %}

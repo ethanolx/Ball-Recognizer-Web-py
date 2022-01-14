@@ -1,0 +1,79 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
+body {
+    background-image: url('../img/Optimized-sports-balls-wallpaper.jpg');
+    background-position: center;
+    background-size: cover;
+    padding-bottom: 15vh;
+}
+
+footer {
+    text-align: center;
+    height: 10vh;
+    padding: 5px;
+    bottom: 0px;
+}
+
+.sign_up button {
+    width: 49%;
+}
+
+nav ul>li>a.nav-link {
+    color: rgb(255, 60, 60);
+}
+
+nav a.navbar-brand {
+    color: rgb(255, 60, 60);
+}
+
+div.about {
+    background-color: rgba(223, 223, 223, 0.527);
+    color: rgb(70, 64, 64);
+}
+
+ul {
+    padding-left: 0;
+}
+
+ul>li.alert-danger {
+    list-style: none;
+    padding: 0.3rem 1rem;
+}
+
+ul.home_menu {
+    position: relative;
+    left: 2rem;
+}
+
+ul.home_menu>li {
+    list-style: none;
+}
+
+ul.home_menu a {
+    color: dodgerblue;
+}
+
+table {
+    font-size: smaller;
+}
+
+br {
+    display: block;
+    content: "";
+    margin-top: -5px;
+}
+
+.signature {
+    font-size: small;
+}
+
+.menu-toggle {
+    width: 40%;
+    height: 40%;
+}

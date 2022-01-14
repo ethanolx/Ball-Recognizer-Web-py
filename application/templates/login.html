@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row pt-5">
+    <div class="col"></div>
+    <div class="dark-form col-10 col-md-8 col-lg-6 col-xl-4">
+        {{ render_flashes() }}
+        <form name="loginForm" action="{{ url_for('auth.login') }}" method="post">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                {{ render_field(form.username) }}
+                {{ render_field(form.password) }}
+                <p>
+                    {{ form.submit(class_='form-control bg-primary text-white') }}
+                </p>
+            </fieldset>
+        </form>
+        <a class="toggle-login-mode" href="{{ url_for('routes.sign_up') }}">Dont have an account? Sign Up Here</a>
+    </div>
+    <div class="col"></div>
+</div>
+{% endblock %}
