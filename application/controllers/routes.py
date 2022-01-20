@@ -2,6 +2,8 @@
 from flask import Blueprint, render_template
 from flask_login.utils import login_required, current_user
 
+from ..models.history import History
+
 # Custom Dependencies
 from .. import TITLE
 from ..forms.login_form import LoginForm
@@ -24,14 +26,22 @@ def index():
 @routes.route('/home')
 @login_required
 def home():
-    return render_template('home.html', title=TITLE, target='home', show='new')
+    return render_template('home.html', title=TITLE, target='home')
 
 
-# Home page (prediction history)
-@routes.route('/history')
+# Dashboard page
+@routes.route('/dashboard')
 @login_required
-def history():
-    return render_template('home.html', title=TITLE, target='home', show='history', user_id=current_user.id) # type: ignore
+def dashboard():
+    all_predictions = History.query.filter_by(userid=current_user.id)
+    return render_template('dashboard.html', title=TITLE, target='home', all_predictions=all_predictions)
+
+
+# # Home page (prediction history)
+# @routes.route('/history')
+# @login_required
+# def history():
+#     return render_template('home.html', title=TITLE, target='home', show='history', user_id=current_user.id) # type: ignore
 
 
 # Login page (existing users)

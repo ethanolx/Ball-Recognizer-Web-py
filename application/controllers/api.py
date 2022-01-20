@@ -12,6 +12,7 @@ from flask.wrappers import Response
 from flask.helpers import flash, url_for
 from flask.templating import render_template
 from flask_login.utils import login_required, current_user
+from flask_cors import cross_origin
 
 from werkzeug.security import generate_password_hash
 
@@ -25,6 +26,8 @@ from ..models.user import User
 # Miscellaneous Dependencies
 from warnings import filterwarnings
 from typing import List, cast
+from ..utils.io_utils import parseImage
+from ..utils.prediction_utils import get_count_of_all_predictions_of_user
 import io
 
 
@@ -79,6 +82,27 @@ def add_new_user_api():
     except sqlalchemy.exc.IntegrityError:
         return jsonify({'error': 'Email or Username has already been taken!'}), 500
 
+
+@api.route('/predict', methods=['POST'])
+@login_required
+@cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
+def predict():
+    try:
+        data = request.get_data()
+        newFile = parseImage(data, userid=current_user.id, num=get_count_of_all_predictions_of_user(userid=current_user.id))
+        print('cool')
+    except Exception:
+        pass
+
+
+SERVER_URL = 'https://...'
+
+def make_prediction(instances):
+    data = json.dumps({"signature_name": "serving_default", "instances": instances.tolist()})
+    headers = {"content-type": "application/json"}
+    json_response = requests.post(SERVER_URL, data=data, headers=headers)
+    predictions = json.loads(json_response.text)['predictions']
+    return predictions
 
 # @api.route('/predict', methods=['POST'])
 # @login_required

@@ -31,3 +31,21 @@
         {% endfor %}
     {% endwith %}
 {% endmacro %}
+
+{% macro render_card(filepath, prediction, predicted_on) %}
+<div class="card">
+    <div class="row">
+        <div class="col">
+            <img src="{{filepath}}" class="img img-thumbnail" alt="">
+        </div>
+        <div class="col">
+            <h2>Prediction</h2>
+            <p>{{prediction}}</p>
+        </div>
+        <div class="col">
+            <h2>Predicted On</h2>
+            <p>{{predicted_on}}</p>
+        </div>
+    </div>
+</div>
+{% endmacro %}

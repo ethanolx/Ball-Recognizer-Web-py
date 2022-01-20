@@ -4,35 +4,50 @@
     <div class="col">
         <ul class="home_menu">
             <li class="nav-item">
-                <a href="{{ url_for('routes.home') }}" class="nav-link {% if show == 'new' %}active{% endif %}">{% if
-                    show == 'new' %}>> {% endif %}New
+                <a href="#" class="nav-link active">>> New
                     Prediction</a>
             </li>
             <li class="nav-item">
-                <a href="{{ url_for('routes.history') }}" class="nav-link {% if show != 'new' %}active{% endif %}">
-                    {% if show != 'new' %}>> {% endif %}Prediction History</a>
+                <a href="{{ url_for('routes.dashboard') }}" class="nav-link">
+                    Dashboard</a>
             </li>
         </ul>
     </div>
-    {% if show == 'new' %}
-    <div class="col-10 col-md-8 col-lg-6 col-xl-4">
-        {{ render_flashes() }}
-        <form name="predictionForm" action="/predict" method="post">
-
-            <fieldset class="form-group">
-
-                <p>
-                    <button type="submit" class="btn btn-primary">Predict</button>
-                    <button type="reset" class="btn btn-warning">Clear</button>
-                </p>
-            </fieldset>
-        </form>
+    <div class="col-6 col-sm-7 col-md-6 col-lg-5 col-xl-6">
+        <div class="row mb-4">
+            <div id="result" class="card bg-info p-2">Welcome :)</div>
+        </div>
+        <div class="row dark-form">
+            {{ render_flashes() }}
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="draw-mode" data-bs-toggle="tab" data-bs-target="#draw-content"
+                        type="button" role="tab" aria-controls="draw-content" aria-selected="true" onclick="webcam.stop()">DRAW MODE</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="file-mode" data-bs-toggle="tab" data-bs-target="#file-content"
+                        type="button" role="tab" aria-controls="file-content" aria-selected="false" onclick="webcam.stop()">FILE MODE</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="cam-mode" data-bs-toggle="tab" data-bs-target="#cam-content"
+                        type="button" role="tab" aria-controls="cam-content" aria-selected="false" onclick="webcam.start()">WEBCAM MODE</button>
+                </li>
+            </ul>
+            <div class="tab-content text-white">
+                <div class="tab-pane fade show active" id="draw-content" role="tabpanel" aria-labelledby="draw-mode">
+                    {% include "includes/canvas.html" %}
+                </div>
+                <div class="tab-pane fade" id="file-content" role="tabpanel" aria-labelledby="file-mode">
+                    <input type="file" name="image-file" id="image-file" class="form-control">
+                </div>
+                <div class="tab-pane fade" id="cam-content" role="tabpanel" aria-labelledby="cam-mode">
+                    <video id="webcam" autoplay playsinline width="640" height="480"></video>
+                    <canvas id="cam-canvas" class="d-none"></canvas>
+                    <button class="btn" onclick="predict_cam()">Predict</button>
+                </div>
+            </div>
+        </div>
     </div>
-    {% else %}
-    <div class="col-10 col-md-8">
-        {{ render_flashes() }}
-    </div>
-    {% endif %}
     <div class="col"></div>
 </div>
 {% endblock %}
