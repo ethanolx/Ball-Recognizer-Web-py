@@ -5,17 +5,6 @@
                 <canvas id="canvas" width="220px" height="220px"></canvas>
             </div>
         </div>
-
-        <div class="row pt-2">
-            <div class="btn-group d-flex" role="group">
-                <button type="button" id="predictBtn" class="btn btn-success w-100" onclick="predict_drawing()">Predict</button>
-                <button type="button" id="clearBtn" class="btn btn-secondary w-100" onclick="clear_canvas()">Clear</button>
-            </div>
-        </div>
-
-        <div class="centered">
-            <h1 id="result"></h1>
-        </div>
     </div>
     <div class="col">
         <div class="row">
@@ -36,6 +25,16 @@
             <span for="brush-preview" class="col-6 text-dark">Brush Preview</span>
             <div class="col-6 align-bottom">
                 <canvas id="brush-preview" class="" width="50" height="50"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row pt-2">
+            <div class="btn-group d-flex" role="group">
+                <button type="button" id="predictBtn" class="btn btn-success w-100" onclick="predict_drawing()">Predict</button>
+                <button type="button" id="clearBtn" class="btn btn-secondary w-100" onclick="clear_canvas()">Clear</button>
             </div>
         </div>
     </div>

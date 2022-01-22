@@ -77,3 +77,16 @@ br {
     width: 40%;
     height: 40%;
 }
+
+video {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+}
+
+#cam-canvas {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    overflow: hidden;
+}

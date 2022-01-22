@@ -3,36 +3,36 @@
 <p>
     {{ field.label }}
     {% if placeholder_ != '' %}
-        {{ field(class_='form-control', placeholder_=placeholder_) }}
+    {{ field(class_='form-control', placeholder_=placeholder_) }}
     {% else %}
-        {{ field(class_='form-control') }}
+    {{ field(class_='form-control') }}
     {% endif %}
     {% if field.errors %}
-    <ul>
-        {% for error in field.errors %}
-        <li class="alert alert-danger">{{ error }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+<ul>
+    {% for error in field.errors %}
+    <li class="alert alert-danger">{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 </p>
 {% endmacro %}
 
 <!-- Macro for rendering flashed messages -->
 {% macro render_flashes() %}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            {% if category == 'error' %}
-                <p class="alert alert-danger">{{ message }}</p>
-            {% elif category == 'warning' %}
-                <p class="alert alert-warning">{{ message }}</p>
-            {% elif category == 'prediction' %}
-                <p class="alert alert-success">Predicted Resale Price: S${{ message | int }}</p>
-            {% endif %}
-        {% endfor %}
-    {% endwith %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% for category, message in messages %}
+{% if category == 'error' %}
+<p class="alert alert-danger">{{ message }}</p>
+{% elif category == 'warning' %}
+<p class="alert alert-warning">{{ message }}</p>
+{% elif category == 'prediction' %}
+<p class="alert alert-success">Predicted Resale Price: S${{ message | int }}</p>
+{% endif %}
+{% endfor %}
+{% endwith %}
 {% endmacro %}
 
-{% macro render_card(filepath, prediction, predicted_on) %}
+{% macro render_card(pred_id, filepath, prediction, predicted_on) %}
 <div class="card">
     <div class="row">
         <div class="col">
@@ -45,6 +45,14 @@
         <div class="col">
             <h2>Predicted On</h2>
             <p>{{predicted_on}}</p>
+        </div>
+        <div class="col">
+            <form action="/remove" method="post">
+                <input type="hidden" name="id" value="{{ pred_id }}">
+                <button class="btn btn-sm btn-outline-danger pl-3 pr-3" type="submit">
+                    DEL
+                </button>
+            </form>
         </div>
     </div>
 </div>

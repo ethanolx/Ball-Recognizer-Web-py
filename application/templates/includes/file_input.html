@@ -1,0 +1,10 @@
+<img id="image-preview" src="" alt="no image to preview" srcset="">
+<form id="file-form" action="/predict" enctype="multipart/form-data" method="post">
+    <input type="file" name="image" id="image-file" class="form-control" oninput="update_image_preview()" accept=".png, .jpg, .jpeg">
+    <div class="row pt-2">
+        <div class="btn-group d-flex" role="group">
+            <button type="button" id="predictBtn" class="btn btn-success w-100" onclick="predict_file()">Predict</button>
+            <button type="reset" id="clearBtn" class="btn btn-secondary w-100" onclick="clear_image_preview()">Clear</button>
+        </div>
+    </div>
+</form>

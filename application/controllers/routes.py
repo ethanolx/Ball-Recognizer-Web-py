@@ -1,13 +1,20 @@
 # Application Dependencies
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, send_from_directory
 from flask_login.utils import login_required, current_user
+import pathlib
+
+from application.utils.io_utils import IMAGE_STORAGE
+
+from ..utils.prediction_utils import get_all_predictions
 
 from ..models.history import History
 
 # Custom Dependencies
-from .. import TITLE
+from .. import TITLE, IMAGE_STORAGE_DIRECTORY
 from ..forms.login_form import LoginForm
 from ..forms.sign_up_form import SignUpForm
+
+IMAGE_STORAGE = pathlib.Path(f'./{IMAGE_STORAGE_DIRECTORY}')
 
 
 # Instantiate Blueprint
@@ -33,15 +40,13 @@ def home():
 @routes.route('/dashboard')
 @login_required
 def dashboard():
-    all_predictions = History.query.filter_by(userid=current_user.id)
+    all_predictions = get_all_predictions(userid=current_user.id)
     return render_template('dashboard.html', title=TITLE, target='home', all_predictions=all_predictions)
 
 
-# # Home page (prediction history)
-# @routes.route('/history')
-# @login_required
-# def history():
-#     return render_template('home.html', title=TITLE, target='home', show='history', user_id=current_user.id) # type: ignore
+@routes.route('/image/<filename>')
+def fetch_image(filename):
+    return send_from_directory(directory=IMAGE_STORAGE, path=filename)
 
 
 # Login page (existing users)

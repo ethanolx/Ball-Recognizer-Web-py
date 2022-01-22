@@ -1,10 +1,11 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+import pathlib
 
 # Global Constants
 TITLE = 'Ball Recognizer'
-
+IMAGE_STORAGE_DIRECTORY = 'image_storage'
 
 db = SQLAlchemy()
 
@@ -13,11 +14,10 @@ db = SQLAlchemy()
 def create_app(env='development'):
     app = Flask(__name__)
 
-    if env == 'development':
-        app.config.from_pyfile('config_dev.cfg')
-    elif env == 'testing':
-        app.testing = True
-        app.config.from_pyfile('config_test.cfg')
+    if env in {'development', 'testing', 'staging', 'deployment'}:
+        app.config.from_pyfile(f'config_{env}.cfg')
+        if env == 'testing':
+            app.testing = True
     else:
         raise AssertionError('Invalid environment!')
 
@@ -28,7 +28,8 @@ def create_app(env='development'):
     login_manager.init_app(app)
 
     from .models.user import User
-    # from .models.history import History
+    from .models.ball import Ball
+    from .models.history import History
 
     with app.app_context():
         db.create_all()

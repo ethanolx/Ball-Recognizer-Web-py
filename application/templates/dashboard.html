@@ -16,7 +16,7 @@
     <div class="col-6 col-sm-7 col-md-6 col-lg-5 col-xl-6">
         {% from "includes/macros.html" import render_card %}
         {% for pred in all_predictions %}
-            {{ render_card(url_for('static', filename='img/' + pred.filepath), ['Basketball', 'Tennis Ball'][pred.prediction - 1], pred.uploaded_on) }}
+            {{ render_card(pred.id, url_for('routes.fetch_image', filename=pred.filepath), ['Basketball', 'Tennis Ball'][pred.prediction - 1], pred.uploaded_on) }}
         {% endfor %}
     </div>
     <div class="col"></div>

@@ -74,7 +74,7 @@ function updatePreview() {
     BRUSH_PREVIEW.height = parseInt(BRUSH_WIDTH_SELECTOR.value);
     BRUSH_PREVIEW_CONTEXT.fillStyle = BRUSH_COLOUR_SELECTOR.value;
     BRUSH_PREVIEW_CONTEXT.fillRect(0, 0, BRUSH_PREVIEW.width, BRUSH_PREVIEW.height);
-    BRUSH_CURRENT_WIDTH.value = BRUSH_WIDTH_SELECTOR.value;
+    BRUSH_CURRENT_WIDTH.innerText = BRUSH_WIDTH_SELECTOR.value;
 
     update_brush_parameters();
 }
@@ -101,45 +101,16 @@ function clear_canvas() {
 async function predict_drawing() {
     document.getElementById('result').innerText = 'Fetching prediction from server...';
     let img_form = new FormData();
-    img_form.append(
-        name = 'image',
-        value = await new Promise(res => CANVAS.toBlob(res, 'image/png')),
-        fileName = 'ball.png'
-    );
-
-    let response = await fetch('/predict', {
-        method: 'POST',
-        body: img_form
-    });
-    let result = await response.json();
-    document.getElementById('result').innerText = `I think it\'s a ${ result }`;
+    CANVAS.toBlob(async (blob) => {
+        img_form.append(name = 'image', value = blob);
+        let response = await fetch('/predict', {
+            method: 'POST',
+            body: img_form
+        });
+        let result = await response.json();
+        document.getElementById('result').innerText = `I think it\'s a ${ result['prediction'] }`;
+    }, 'image/png');
 }
-
-const webcamElement = document.getElementById('webcam');
-const canvasElement = document.getElementById('cam-canvas');
-const webcam = new Webcam(webcamElement, 'user', canvasElement);
-
-
-async function predict_cam() {
-    let picture = webcam.snap();
-    webcam.stop();
-
-    document.getElementById('result').innerText = 'Fetching prediction from server...';
-    let img_form = new FormData();
-    img_form.append(
-        name = 'image',
-        value = await new Promise(res => canvasElement.toBlob(res, 'image/png')),
-        fileName = 'ball.png'
-    );
-
-    let response = await fetch('/predict', {
-        method: 'POST',
-        body: img_form
-    });
-    let result = await response.json();
-    document.getElementById('result').innerText = `I think it\'s a ${ result }`;
-}
-
 
 load_page();
 

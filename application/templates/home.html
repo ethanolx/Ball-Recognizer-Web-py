@@ -35,15 +35,13 @@
             </ul>
             <div class="tab-content text-white">
                 <div class="tab-pane fade show active" id="draw-content" role="tabpanel" aria-labelledby="draw-mode">
-                    {% include "includes/canvas.html" %}
+                    {% include "includes/drawing_input.html" %}
                 </div>
                 <div class="tab-pane fade" id="file-content" role="tabpanel" aria-labelledby="file-mode">
-                    <input type="file" name="image-file" id="image-file" class="form-control">
+                    {% include "includes/file_input.html" %}
                 </div>
                 <div class="tab-pane fade" id="cam-content" role="tabpanel" aria-labelledby="cam-mode">
-                    <video id="webcam" autoplay playsinline width="640" height="480"></video>
-                    <canvas id="cam-canvas" class="d-none"></canvas>
-                    <button class="btn" onclick="predict_cam()">Predict</button>
+                    {% include "includes/cam_input.html" %}
                 </div>
             </div>
         </div>
