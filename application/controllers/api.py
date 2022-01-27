@@ -6,6 +6,7 @@ import pandas as pd
 # Application Dependencies
 import requests
 import sqlalchemy
+from skimage.transform import resize
 
 from flask import Blueprint, get_flashed_messages, json, jsonify, redirect, request, send_file
 from flask.wrappers import Response
@@ -19,6 +20,8 @@ from werkzeug.security import generate_password_hash
 # Graphing Dependencies
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
+from application.models.ball import Ball
+
 from ..models.history import History
 
 # Custom Dependencies
@@ -29,12 +32,20 @@ from ..models.user import User
 from warnings import filterwarnings
 from typing import List, cast
 from ..utils.io_utils import parseImage
-from ..utils.prediction_utils import get_new_index, remove_prediction
+from ..utils.prediction_utils import get_all_predictions, get_new_index, remove_prediction
 import io
+from PIL import Image
+from .. import IMAGE_STORAGE_DIRECTORY
 
 
 # Instantiate Blueprint
 api = Blueprint('api', __name__)
+
+import json
+import plotly
+import plotly.express as px
+import pandas as pd
+from dash import html as dhtml, dcc
 
 
 # Get user API
@@ -94,10 +105,14 @@ def predict():
     newFile = parseImage(img,
                          userid=current_user.id,
                          num=new_idx)
-    prediction = make_prediction(newFile)
+    newImg = Image.open('application/' + IMAGE_STORAGE_DIRECTORY + '/' + newFile).convert('RGB')
+    img_arr = np.array(newImg).astype('float32') / 255.
+    img_arr = resize(img_arr, (220, 220, 3))
+    img_arr = np.expand_dims(img_arr, axis=0)
+    prediction = int(make_prediction(img_arr))
     save_record(userid=current_user.id, filepath=newFile, prediction=prediction)
-    print(f'Successful upload of {newFile}')
-    return jsonify({'prediction': prediction}), 200
+    ball_type = get_ball(prediction)
+    return jsonify({'prediction': ball_type}), 200
 
 
 def save_record(userid, filepath, prediction):
@@ -107,9 +122,16 @@ def save_record(userid, filepath, prediction):
                              prediction=prediction)
         db.session.add(new_record)
         db.session.commit()
+        print(f'Successful upload of {filepath}')
     except Exception as e:
-        print('Why', str(e))
+        print(str(e))
 
+def get_ball(ball_id: int):
+    try:
+        ball: Ball = Ball.query.get(ball_id)
+        return ball.ball_type.capitalize()
+    except:
+        pass
 
 def delete_record(record_id):
     try:
@@ -117,7 +139,6 @@ def delete_record(record_id):
         remove_prediction(record.filepath)
         db.session.delete(record)
         db.session.commit()
-        print('yay')
         return 0
     except Exception as error:
         db.session.rollback()
@@ -133,13 +154,13 @@ def delete_record_api():
             flash(m)
     return redirect(url_for('routes.dashboard'))
 
-SERVER_URL = 'https://...'
+
+SERVER_URL = 'https://ca2-doaa03-ej-tf.herokuapp.com/v1/models/img_classifier:predict'
 
 
 def make_prediction(instance):
-    # data = json.dumps({"signature_name": "serving_default", "instances": instances.tolist()})
-    # headers = {"content-type": "application/json"}
-    # json_response = requests.post(SERVER_URL, data=data, headers=headers)
-    # predictions = json.loads(json_response.text)['predictions']
-    # return predictions
-    return 1
+    data = json.dumps({"signature_name": "serving_default", "instances": instance.tolist()})
+    headers = {"content-type": "application/json"}
+    json_response = requests.post(SERVER_URL, data=data, headers=headers)
+    predictions = json.loads(json_response.text)['predictions']
+    return np.argmax(predictions[0]) + 1

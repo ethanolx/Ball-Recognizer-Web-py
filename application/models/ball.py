@@ -12,7 +12,21 @@ class Ball(db.Model):  # type: ignore
 
 @event.listens_for(Ball.__table__, 'after_create')
 def load_default_values(*args, **kwargs):
-    balls = ['Basketball', 'Tennis']
+    balls = [
+        'baseball',
+        'basketball',
+        'beachball',
+        'billiard ball',
+        'bowling ball',
+        'cricket ball',
+        'football',
+        'golf ball',
+        'soccer ball',
+        'tennis ball',
+        'volleyball',
+        'water polo ball',
+        'wiffle ball'
+    ]
     for ball in balls:
         db.session.add(Ball(ball_type=ball))
     db.session.commit()

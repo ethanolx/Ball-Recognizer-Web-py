@@ -1,6 +1,17 @@
-<div id="cam-preview"></div>
-<video id="webcam" autoplay playsinline width="220" height="220"></video>
-<canvas id="cam-canvas" width="220" height="220" hidden></canvas>
+<div class="row">
+    <div>
+        <img id="hidden_img" src="" hidden>
+    </div>
+    <div class="w-100">
+        <video id="webcam" class="w-100 h-100" autoplay playsinline></video>
+    </div>
+    <div>
+        <canvas id="cam-canvas" height="220px" width="220px" hidden></canvas>
+    </div>
+    <div hidden>
+        <canvas id="hidden-canvas" hidden></canvas>
+    </div>
+</div>
 <div class="row pt-2">
     <div class="btn-group d-flex" role="group">
         <button type="button" id="predictBtn" class="btn btn-success w-100" onclick="predict_cam()">Predict</button>
