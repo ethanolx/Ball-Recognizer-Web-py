@@ -80,20 +80,20 @@ def add_new_user(email, username, password):
         raise err
 
 
-@api.route('/api/user/add', methods=['POST'])
-def add_new_user_api():
-    try:
-        data = request.get_json()
-        if type(data) is str:
-            data = json.loads(data)
-        email = data['email']  # type: ignore
-        username = data['username']  # type: ignore
-        password = data['password']  # type: ignore
-        new_user_id = add_new_user(
-            email=email, username=username, password=password)
-        return jsonify({'new_user_id': new_user_id})
-    except sqlalchemy.exc.IntegrityError:
-        return jsonify({'error': 'Email or Username has already been taken!'}), 500
+# @api.route('/api/user/add', methods=['POST'])
+# def add_new_user_api():
+#     try:
+#         data = request.get_json()
+#         if type(data) is str:
+#             data = json.loads(data)
+#         email = data['email']  # type: ignore
+#         username = data['username']  # type: ignore
+#         password = data['password']  # type: ignore
+#         new_user_id = add_new_user(
+#             email=email, username=username, password=password)
+#         return jsonify({'new_user_id': new_user_id})
+#     except sqlalchemy.exc.IntegrityError:
+#         return jsonify({'error': 'Email or Username has already been taken!'}), 500
 
 
 @api.route('/predict', methods=['POST'])
@@ -109,17 +109,18 @@ def predict():
     img_arr = np.array(newImg).astype('float32') / 255.
     img_arr = resize(img_arr, (220, 220, 3))
     img_arr = np.expand_dims(img_arr, axis=0)
-    prediction = int(make_prediction(img_arr))
-    save_record(userid=current_user.id, filepath=newFile, prediction=prediction)
+    prediction, probability = make_prediction(img_arr)
+    save_record(userid=current_user.id, filepath=newFile, prediction=prediction, probability=probability)
     ball_type = get_ball(prediction)
-    return jsonify({'prediction': ball_type}), 200
+    return jsonify({'prediction': ball_type, 'probability': probability}), 200
 
 
-def save_record(userid, filepath, prediction):
+def save_record(userid, filepath, prediction, probability):
     try:
         new_record = History(userid=userid,
                              filepath=filepath,
-                             prediction=prediction)
+                             prediction=prediction,
+                             probability=probability)
         db.session.add(new_record)
         db.session.commit()
         print(f'Successful upload of {filepath}')
@@ -162,5 +163,7 @@ def make_prediction(instance):
     data = json.dumps({"signature_name": "serving_default", "instances": instance.tolist()})
     headers = {"content-type": "application/json"}
     json_response = requests.post(SERVER_URL, data=data, headers=headers)
-    predictions = json.loads(json_response.text)['predictions']
-    return np.argmax(predictions[0]) + 1
+    result = json.loads(json_response.text)['predictions'][0]
+    prediction = np.argmax(result)
+    probability = result[prediction]
+    return int(prediction + 1), probability

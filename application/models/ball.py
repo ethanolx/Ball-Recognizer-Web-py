@@ -30,3 +30,10 @@ def load_default_values(*args, **kwargs):
     for ball in balls:
         db.session.add(Ball(ball_type=ball))
     db.session.commit()
+
+
+@event.listens_for(Ball.__table__, 'after_create')
+def delete_all_images(*args, **kwargs):
+    import glob, os
+    for f in glob.glob('./application/image_storage/*.png'):
+        os.remove(f)

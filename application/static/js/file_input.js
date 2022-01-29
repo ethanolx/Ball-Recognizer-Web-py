@@ -19,5 +19,5 @@ async function predict_file() {
         body: new FormData(document.getElementById('file-form'))
     });
     let result = await response.json();
-    document.getElementById('result').innerText = `I think it\'s a ${ result['prediction'] }`;
+    document.getElementById('result').innerText = `I think it\'s a ${ result['prediction'] } (${(result['probability'] * 100.0).toFixed(2)}%)`;
 }

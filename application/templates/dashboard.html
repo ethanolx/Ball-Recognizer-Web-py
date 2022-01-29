@@ -20,15 +20,14 @@
         </div>
         {% from "includes/macros.html" import render_card %}
         {% for pred in all_predictions %}
-        {{ render_card(pred.id, url_for('routes.fetch_image', filename=pred.filepath), pred.ball_type.capitalize(),
-        pred.uploaded_on.strftime("%d %b %y %H:%M")) }}
+        {{ render_card(pred.id, url_for('routes.fetch_image', filename=pred.filepath), pred.ball_type.capitalize(), pred.probability, pred.uploaded_on.strftime("%d %b %y %H:%M")) }}
         {% endfor %}
     </div>
     <div class="col"></div>
-
-    <script type='text/javascript' defer>
-        var graphs = {{ graphJSON | safe}};
+    <script async>
+        let graphs = {{ graphJSON | safe }};
         Plotly.plot('chart', graphs, {});
     </script>
+    <script src="{{ url_for('static', filename='js/plot.js') }}" async></script>
 </div>
 {% endblock %}

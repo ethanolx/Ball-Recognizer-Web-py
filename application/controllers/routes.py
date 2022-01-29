@@ -61,6 +61,7 @@ def chart(all_predictions):
 @login_required
 def dashboard():
     all_predictions = get_all_predictions(userid=current_user.id)
+    print(all_predictions)
     graphJSON = chart(all_predictions=all_predictions)
     return render_template('dashboard.html', title=TITLE, target='home', all_predictions=all_predictions, graphJSON=graphJSON)
 

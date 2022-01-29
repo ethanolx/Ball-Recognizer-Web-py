@@ -14,7 +14,7 @@ db = SQLAlchemy()
 def create_app(env='development'):
     app = Flask(__name__)
 
-    if env in {'development', 'testing', 'staging', 'deployment'}:
+    if env in {'development', 'testing', 'staging', 'production'}:
         app.config.from_pyfile(f'config_{env}.cfg')
         if env == 'testing':
             app.testing = True
