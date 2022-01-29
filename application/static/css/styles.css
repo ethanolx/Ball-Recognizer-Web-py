@@ -89,3 +89,16 @@ video {
     object-fit: cover;
     overflow: hidden;
 }
+
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: rgb(0, 78, 156);
+    background-color: #fdfdfd;
+}
+
+
+nav ul>li>a.logout {
+    color: rgb(255, 255, 255);
+    background-color: #2c2c2c;
+    border-radius: 30px;
+}

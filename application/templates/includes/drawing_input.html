@@ -1,38 +1,42 @@
-<div class="canvas row">
-    <div class="col-md-6">
-        <div class="row">
-            <div>
-                <canvas id="canvas" width="220px" height="220px"></canvas>
+<div class='container-fluid pt-3'>
+    <div class="canvas row">
+        <div class="col-md-6">
+            <div class="row">
+                <div>
+                    <canvas id="canvas" width="220px" height="220px"></canvas>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="row">
-            <label for="brush-colour" class="col-6 text-dark">Brush Colour</label>
-            <div class="col-6">
-                <input type="color" id="brush-colour" class="col-6" onchange="updatePreview()">
+        <div class="col">
+            <div class="row">
+                <label for="brush-colour" class="col-6 text-dark">Brush Colour</label>
+                <div class="col-6">
+                    <input type="color" id="brush-colour" class="col-6" onchange="updatePreview()">
+                </div>
+            </div>
+            <div class="row">
+                <label for="brush-width" class="col-6 text-dark">Brush Width</label>
+                <div class="col-6">
+                    <input type="range" id="brush-width" class="col-6" min="1" max="50" value="20" step="1"
+                        onchange="updatePreview()">
+                    <span class="text-dark"><span id="current-width">20</span>px</span>
+                </div>
+            </div>
+            <div class="row">
+                <span for="brush-preview" class="col-6 text-dark">Brush Preview</span>
+                <div class="col-6 align-bottom">
+                    <canvas id="brush-preview" class="" width="50" height="50"></canvas>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <label for="brush-width" class="col-6 text-dark">Brush Width</label>
-            <div class="col-6">
-                <input type="range" id="brush-width" class="col-6" min="1" max="50" value="20" step="1"
-                    onchange="updatePreview()">
-                <span class="text-dark"><span id="current-width">20</span>px</span>
-            </div>
-        </div>
-        <div class="row">
-            <span for="brush-preview" class="col-6 text-dark">Brush Preview</span>
-            <div class="col-6 align-bottom">
-                <canvas id="brush-preview" class="" width="50" height="50"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="row pt-2">
-            <div class="btn-group d-flex" role="group">
-                <button type="button" id="predictBtn" class="btn btn-success w-100" onclick="predict_drawing()">Predict</button>
-                <button type="button" id="clearBtn" class="btn btn-secondary w-100" onclick="clear_canvas()">Clear</button>
+        <div class="col-md-6">
+            <div class="row pt-2">
+                <div class="btn-group d-flex" role="group">
+                    <button type="button" id="predictBtn" class="btn btn-success w-100"
+                        onclick="predict_drawing()">Predict</button>
+                    <button type="button" id="clearBtn" class="btn btn-secondary w-100"
+                        onclick="clear_canvas()">Clear</button>
+                </div>
             </div>
         </div>
     </div>
