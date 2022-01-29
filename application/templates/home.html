@@ -18,7 +18,7 @@
         </div>
         <div class="col-6 col-sm-7 col-md-6 col-lg-5 col-xl-6">
             <div class="row mb-4">
-                <div id="result" class="card bg-info p-2">Welcome :)</div>
+                <div id="result" class="card bg-info">Welcome :)</div>
             </div>
             <div class="row">
                 {{ render_flashes() }}
@@ -40,7 +40,7 @@
                     </li>
                 </ul>
                 <div class="tab-content text-white">
-                    <div class="tab-pane fade show active" id="draw-content" role="tabpanel"
+                    <div class="tab-pane fade show active pt-3" id="draw-content" role="tabpanel"
                         aria-labelledby="draw-mode">
                         {% include "includes/drawing_input.html" %}
                     </div>

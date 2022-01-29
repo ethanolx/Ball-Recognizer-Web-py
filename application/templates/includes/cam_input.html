@@ -1,9 +1,12 @@
 <div id="cam-preview"></div>
 <video id="webcam" autoplay playsinline width="220" height="220"></video>
 <canvas id="cam-canvas" width="220" height="220" hidden></canvas>
-<div class="row pt-2">
-    <div class="btn-group d-flex" role="group">
-        <button type="button" id="predictBtn" class="btn btn-success w-100" onclick="predict_cam()">Predict</button>
-        <button type="button" id="clearBtn" class="btn btn-secondary w-100" onclick="clear_cam()">Clear</button>
+<div class="container-fluid pt-2">
+    <div class='row'></div>
+    <div class='row'>
+        <div class="btn-group d-flex" role="group">
+            <button type="button" id="predictBtn" class="btn btn-success w-100" onclick="predict_cam()">Predict</button>
+            <button type="button" id="clearBtn" class="btn btn-secondary w-100" onclick="clear_cam()">Clear</button>
+        </div>
     </div>
 </div>
