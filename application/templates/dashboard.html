@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container dark-form mt-3">
     <div class="row mt-3">
-        <div class="col">
+        <div class="col-12 col-md-3 col-lg-3">
             <ul class="home_menu">
                 <li class="nav-item">
                     <a href="{{ url_for('routes.home') }}" class="nav-link">
@@ -14,14 +14,23 @@
                 </li>
             </ul>
         </div>
-        <div class="col-7 col-sm-8 col-md-7 col-lg-6 col-xl-7 mt-3 pt-1">
+        <div class="col-12 col-sm">
+            <div class="row mb-3">
+                <div class="col-12 bg-white">
+                    <div id="chart" class="chart w-100"></div>
+                </div>
+            </div>
             {% from "includes/macros.html" import render_card %}
             {% for pred in all_predictions %}
-            {{ render_card(pred.id, url_for('routes.fetch_image', filename=pred.filepath), ['Basketball', 'Tennis
-            Ball'][pred.prediction - 1], pred.uploaded_on) }}
+            {{ render_card(pred.id, url_for('routes.fetch_image', filename=pred.filepath), pred.ball_type.capitalize(), pred.probability, pred.uploaded_on.strftime("%d %b %y %H:%M")) }}
             {% endfor %}
         </div>
-        <div class="col"></div>
+        <div class="col-lg-1"></div>
     </div>
+    <script async>
+        let graphs = {{ graphJSON | safe }};
+        Plotly.plot('chart', graphs, {});
+    </script>
+    <script src="{{ url_for('static', filename='js/plot.js') }}" async></script>
 </div>
 {% endblock %}

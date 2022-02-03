@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container dark-form mt-3">
-    <div class="row ">
-        <div class="col-2">
-            <ul class="home_menu">
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <ul class="home_menu w-100">
                 <li class="nav-item">
                     <a href="#" class="nav-link active">
                         New Prediction</a>
@@ -14,32 +14,34 @@
                 </li>
             </ul>
         </div>
-        <div class="col-1">
-        </div>
-        <div class="col-6 col-sm-7 col-md-6 col-lg-5 col-xl-6">
-            <div class="row mb-4">
-                <div id="result" class="card bg-info">Welcome :)</div>
-            </div>
+        <div class="col-12 col-md">
             <div class="row">
                 {{ render_flashes() }}
-                <ul class="nav nav-pills white" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="draw-mode" data-bs-toggle="tab"
+                <ul class="nav nav-pills white p-0" id="prediction-mode" role="tablist">
+                    <li class="nav-item col-4" role="presentation">
+                        <button class="nav-link active w-100" id="draw-mode" data-bs-toggle="tab"
                             data-bs-target="#draw-content" type="button" role="tab" aria-controls="draw-content"
-                            aria-selected="true" onclick="webcam.stop()">DRAW MODE</button>
+                            aria-selected="true" onclick="webcam.stop()">DRAW</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="file-mode" data-bs-toggle="tab" data-bs-target="#file-content"
+                    <li class="nav-item col-4" role="presentation">
+                        <button class="nav-link w-100" id="file-mode" data-bs-toggle="tab" data-bs-target="#file-content"
                             type="button" role="tab" aria-controls="file-content" aria-selected="false"
-                            onclick="webcam.stop()">FILE MODE</button>
+                            onclick="webcam.stop()">FILE</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="cam-mode" data-bs-toggle="tab" data-bs-target="#cam-content"
+                    <li class="nav-item col-4" role="presentation">
+                        <button class="nav-link w-100" id="cam-mode" data-bs-toggle="tab" data-bs-target="#cam-content"
                             type="button" role="tab" aria-controls="cam-content" aria-selected="false"
-                            onclick="webcam.start()">WEBCAM MODE</button>
+                            onclick="webcam.start()">WEBCAM</button>
                     </li>
                 </ul>
-                <div class="tab-content text-white">
+            </div>
+            <div class="row m-3">
+                <div class="col-12 p-0">
+                    <h3 id="result" class="bg-transparent">Welcome :)</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="tab-content text-white p-0">
                     <div class="tab-pane fade show active pt-3" id="draw-content" role="tabpanel"
                         aria-labelledby="draw-mode">
                         {% include "includes/drawing_input.html" %}
@@ -53,7 +55,6 @@
                 </div>
             </div>
         </div>
-        <div class="col"></div>
     </div>
 </div>
 {% endblock %}

@@ -5,7 +5,7 @@ from email_validator import validate_email
 from .. import db
 
 
-class User(UserMixin, db.Model):  # type: ignore
+class User(db.Model, UserMixin):  # type: ignore
     id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(40), unique=True, nullable=False)
     username = Column(String(30), unique=True, nullable=False)

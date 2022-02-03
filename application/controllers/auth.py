@@ -1,5 +1,6 @@
 # Application Dependencies
 import requests
+import sqlalchemy
 
 from flask import Blueprint, json, request, flash, redirect, url_for
 from flask.templating import render_template
@@ -13,7 +14,7 @@ from .. import TITLE
 from .api import get_user
 from ..forms.sign_up_form import SignUpForm
 from ..models.user import User
-
+from .api import add_new_user
 
 # Instantiate Blueprint
 auth = Blueprint('auth', __name__)
@@ -44,20 +45,12 @@ def sign_up():
             email = request.form.get('email')
             new_username = request.form.get('new_username')
             new_password = request.form.get('new_password')
-            data = json.dumps({
-                'email': email,
-                'username': new_username,
-                'password': new_password
-            })
-            del new_password
-            response = requests.post(
-                url=request.host_url + 'api/user/add', json=data)
-            assert response.status_code == 200
-            new_user = get_user(response.json()['new_user_id'])
+            new_user_id = add_new_user(email=email, username=new_username, password=new_password)
+            new_user = get_user(new_user_id)
             login_user(user=new_user)
             return redirect(url_for('routes.home'))
-        except AssertionError:
-            flash(response.json()['error'], category='error')  # type: ignore
+        except sqlalchemy.exc.IntegrityError:
+            flash('Email or Username has already been taken!', category='error')
             return redirect(url_for('routes.sign_up'))
     else:
         return render_template('sign-up.html', title=TITLE, target='login', form=form, loginMode=False)

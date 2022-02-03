@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -5,19 +6,22 @@ import pathlib
 
 # Global Constants
 TITLE = 'Ball Recognizer'
-IMAGE_STORAGE_DIRECTORY = 'image_storage'
+DATETIME_FORMAT = '%d/%m/%Y %H:%M:%S'
+SERVER_URL = 'https://ca2-doaa03-ej-tf.herokuapp.com/v1/models/img_classifier:predict'
+IMAGE_STORAGE_DIRECTORY = []
+ENV = []
+
 
 db = SQLAlchemy()
-
 
 # Application Factory
 def create_app(env='development'):
     app = Flask(__name__)
 
-    if env in {'development', 'testing', 'staging', 'deployment'}:
+    if env in {'development', 'testing', 'staging', 'production'}:
         app.config.from_pyfile(f'config_{env}.cfg')
-        if env == 'testing':
-            app.testing = True
+        ENV.append(env)
+        IMAGE_STORAGE_DIRECTORY.append(pathlib.Path(app.config['UPLOAD_DIRECTORY']).absolute())
     else:
         raise AssertionError('Invalid environment!')
 
