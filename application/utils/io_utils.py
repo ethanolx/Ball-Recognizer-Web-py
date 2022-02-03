@@ -1,10 +1,11 @@
 import pathlib
+import time
 from .. import IMAGE_STORAGE_DIRECTORY
 
-IMAGE_STORAGE = pathlib.Path(f'./application/{IMAGE_STORAGE_DIRECTORY}')
 
-
-def parseImage(imgData, userid: int, num: int):
-    newFile = IMAGE_STORAGE / f'{userid}_{num}.png'
-    imgData.save(newFile)
-    return str(f'{userid}_{num}.png')
+def saveImage(imgData):
+    timestamp = int(time.time() * 1000.) # save the file using timestamp in milliseconds
+    newFile = f'{timestamp}.png'
+    filepath = IMAGE_STORAGE_DIRECTORY[0] / newFile
+    imgData.save(filepath)
+    return newFile

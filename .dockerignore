@@ -5,7 +5,7 @@ cmd.sh
 *.tar.gz
 *.zip
 *.sql
-*.db
+*/*/*.db
 secrets.txt
 ./tmp
 ./build/*
@@ -16,7 +16,8 @@ venv
 .venv
 .gitignore
 .vscode
+.pytest_cache
 __pycache__
+*/*/__pycache__
 .gitlab-ci.yml
-database.db
 nohup.out

@@ -1,31 +1,22 @@
-/**@type {number} */
-const DEFAULT_BRUSH_WIDTH = 20;
+let DRAWING_PREDICTED = false;
 
-/**@type {string} */
+// Sensible Default Values
+const DEFAULT_BRUSH_WIDTH = 20;
 const DEFAULT_BRUSH_COLOUR = '#000000';
 
-/**@type {HTMLCanvasElement} */
+// Initialise Canvas and Canvas Context variables
 let CANVAS = document.getElementById('canvas');
-
-/**@type {CanvasRenderingContext2D} */
 let CANVAS_CONTEXT = CANVAS.getContext('2d');
 
+// Initialise Settings
 let BRUSH_WIDTH_SELECTOR = document.getElementById('brush-width');
 let BRUSH_CURRENT_WIDTH = document.getElementById('current-width');
 let BRUSH_COLOUR_SELECTOR = document.getElementById('brush-colour');
 let BRUSH_PREVIEW = document.getElementById('brush-preview');
 CANVAS_CONTEXT.lineCap = CANVAS_CONTEXT.lineJoin = 'round';
 
-/**
- * @typedef Coordinates
- * @property {number} x
- * @property {number} y
- */
-
-/**@type {Coordinates} */
+// Initialise Canvas Drawing Utilities
 let ORIGIN_COORDS = { x: 0, y: 0 };
-
-/**@type {Coordinates} */
 let DESTINATION_COORDS = { x: 0, y: 0 };
 
 
@@ -129,20 +120,27 @@ function clear_canvas() {
     CANVAS_CONTEXT.clearRect(0, 0, 220, 220);
     CANVAS_CONTEXT.fillStyle = "white";
     CANVAS_CONTEXT.fillRect(0, 0, CANVAS.width, CANVAS.height);
+    DRAWING_PREDICTED = false;
 }
 
-async function predict_drawing() {
-    document.getElementById('result').innerText = 'Fetching prediction from server...';
-    let img_form = new FormData();
-    CANVAS.toBlob(async (blob) => {
-        img_form.append(name = 'image', value = blob);
-        let response = await fetch('/predict', {
-            method: 'POST',
-            body: img_form
-        });
-        let result = await response.json();
-        document.getElementById('result').innerText = `I think it\'s a ${ result['prediction'] } (${(result['probability'] * 100.0).toFixed(2)}%)`;
-    }, 'image/png');
+function predict_drawing() {
+    if (!DRAWING_PREDICTED) {
+        document.getElementById('result').innerText = 'Fetching prediction from server...';
+        CANVAS.toBlob(blob => {
+            let img_form = new FormData();
+            img_form.append(name = 'image', value = blob);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: img_form
+            })
+                .then(res => res.json())
+                .then(result => {
+                    document.getElementById('result').innerText = `I think it\'s a ${ result['prediction'] } (${ (result['probability'] * 100.0).toFixed(2) }%)`;
+                });
+        }, 'image/png');
+    }
+    DRAWING_PREDICTED = true;
 }
 
 load_page();
