@@ -63,22 +63,6 @@ def add_new_user(email, username, password):
         raise err
 
 
-# @api.route('/api/user/add', methods=['POST'])
-# def add_new_user_api():
-#     try:
-#         data = request.get_json()
-#         if type(data) is str:
-#             data = json.loads(data)
-#         email = data['email']
-#         username = data['username']
-#         password = data['password']
-#         new_user_id = add_new_user(
-#             email=email, username=username, password=password)
-#         return jsonify({'new_user_id': new_user_id})
-#     except sqlalchemy.exc.IntegrityError:
-#         return jsonify({'error': 'Email or Username has already been taken!'}), 500
-
-
 @api.route('/predict', methods=['POST'])
 @login_required
 # @cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
@@ -124,6 +108,8 @@ def get_ball(ball_id: int):
         pass
 
 # Delete record API
+
+
 def delete_record(record_id):
     try:
         record = History.query.get(record_id)

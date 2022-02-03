@@ -1,8 +1,7 @@
 # Application Dependencies
-import requests
 import sqlalchemy
 
-from flask import Blueprint, json, request, flash, redirect, url_for
+from flask import Blueprint, request, flash, redirect, url_for
 from flask.templating import render_template
 from flask_login import login_user
 from flask_login.utils import login_required, logout_user
@@ -10,7 +9,6 @@ from flask_login.utils import login_required, logout_user
 from werkzeug.security import check_password_hash
 
 # Custom Dependencies
-from .. import TITLE
 from .api import get_user
 from ..forms.sign_up_form import SignUpForm
 from ..models.user import User
@@ -53,7 +51,7 @@ def sign_up():
             flash('Email or Username has already been taken!', category='error')
             return redirect(url_for('routes.sign_up'))
     else:
-        return render_template('sign-up.html', title=TITLE, target='login', form=form, loginMode=False)
+        return render_template('sign-up.html', form=form, loginMode=False)
 
 
 # Log out API

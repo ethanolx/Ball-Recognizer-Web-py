@@ -2,18 +2,15 @@
 from datetime import datetime
 from flask import Blueprint, render_template, send_from_directory
 from flask_login.utils import login_required, current_user
-import pathlib
 from dateutil import tz
 
 from ..utils.prediction_utils import get_all_predictions
-from ..models.ball import Ball
-from ..models.history import History
 import pandas as pd
 import json
 import plotly
 import plotly.express as px
 # Custom Dependencies
-from .. import TITLE, IMAGE_STORAGE_DIRECTORY
+from .. import IMAGE_STORAGE_DIRECTORY
 from ..forms.login_form import LoginForm
 from ..forms.sign_up_form import SignUpForm
 
