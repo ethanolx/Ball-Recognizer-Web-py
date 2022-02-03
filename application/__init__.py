@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 import pathlib
 
 # Global Constants
-TITLE = 'Ball Recognizer'
 DATETIME_FORMAT = '%d/%m/%Y %H:%M:%S'
 SERVER_URL = 'https://ca2-doaa03-ej-tf.herokuapp.com/v1/models/img_classifier:predict'
 IMAGE_STORAGE_DIRECTORY = []

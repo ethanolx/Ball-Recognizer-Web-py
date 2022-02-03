@@ -1,14 +1,7 @@
 # Data Manipulation Dependencies
-from dash import html as dhtml, dcc
-import plotly.express as px
-import plotly
-import json
-from datetime import datetime
 import numpy as np
-import pandas as pd
 
 # Application Dependencies
-import requests
 import sqlalchemy
 from skimage.transform import resize
 from skimage.util import crop
@@ -25,7 +18,7 @@ from .. import DATETIME_FORMAT, ENV
 from ..models.history import History
 
 # Custom Dependencies
-from .. import db, TITLE
+from .. import db
 from ..models.user import User
 
 # Miscellaneous Dependencies

@@ -96,10 +96,14 @@ video#webcam {
 }
 
 
+nav.navbar a.nav-link {
+    padding: 0.5rem 0.6rem;
+}
+
 nav ul>li>a.logout {
-    color: rgb(255, 255, 255);
-    background-color: #2c2c2c;
-    border-radius: 30px;
+    color: white;
+    background-color: #444444;
+    border-radius: 0.5rem;
 }
 
 .home_menu {
