@@ -9,6 +9,16 @@
             <fieldset class="form-group pb-3">
                 {{ render_field(form.email, placeholder_='E.g. john_doe@abc.net') }}
                 {{ render_field(form.new_username, placeholder_='E.g. John Doe') }}
+                <p class="mb-1">
+                    Password Requirements:
+                </p>
+                <ul class="small">
+                    <li>Minimum 8 Characters</li>
+                    <li>At least one lowercase letter [a-z]</li>
+                    <li>At least one uppercase letter [A-Z]</li>
+                    <li>At least one digit [0-9]</li>
+                    <li>At least one special character [!@#$%^&*]</li>
+                </ul>
                 {{ render_field(form.new_password) }}
                 {{ render_field(form.confirm_password) }}
                 <button type="submit" class="btn btn-success">Submit</button>

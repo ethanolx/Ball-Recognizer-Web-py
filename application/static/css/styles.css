@@ -33,8 +33,7 @@ ul.home_menu>li {
     list-style: none;
 }
 
-
-.about-list {
+li {
     list-style-position: inside;
 }
 
