@@ -1,18 +1,15 @@
-# Application Dependencies
+# Import Dependencies
+from dateutil import tz
 from datetime import datetime
+
 from flask import Blueprint, render_template, send_from_directory
 from flask_login.utils import login_required, current_user
-from dateutil import tz
 
-from ..utils.prediction_utils import get_all_predictions
-import pandas as pd
-import json
-import plotly
-import plotly.express as px
-# Custom Dependencies
+from .utils import *
 from .. import IMAGE_STORAGE_DIRECTORY
 from ..forms.login_form import LoginForm
 from ..forms.sign_up_form import SignUpForm
+from ..forms.delete_form import DeleteForm
 
 
 # Instantiate Blueprint
@@ -33,31 +30,15 @@ def index():
 def home():
     return render_template('home.html')
 
-def chart(all_predictions):
-    names = []
-    counts = []
-    for pred in all_predictions:
-        if pred.ball_type in names:
-            counts[names.index(pred.ball_type)] += 1
-        else:
-            names.append(pred.ball_type)
-            counts.append(1)
-    df = pd.DataFrame(data={
-        'Ball': names,
-        'Count': counts
-    })
-    fig = px.pie(data_frame=df, names='Ball', values='Count')
-    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return graphJSON
-
 
 # Dashboard page
 @routes.route('/dashboard')
 @login_required
 def dashboard():
-    all_predictions = get_all_predictions(userid=current_user.id)
+    del_form = DeleteForm()
+    all_predictions = get_all_predictions(userid=current_user.id)  # type: ignore
     graphJSON = chart(all_predictions=all_predictions)
-    return render_template('dashboard.html', all_predictions=all_predictions, graphJSON=graphJSON, convert_to_local_time=convert_to_local_time)
+    return render_template('dashboard.html', all_predictions=all_predictions, graphJSON=graphJSON, convert_to_local_time=convert_to_local_time, del_form=del_form)
 
 
 def convert_to_local_time(dt: datetime):

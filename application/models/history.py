@@ -1,5 +1,5 @@
-from sqlalchemy import Integer, Column, String, ForeignKey, DateTime, Float
 from datetime import datetime
+from sqlalchemy import Integer, Column, String, ForeignKey, DateTime, Float
 from sqlalchemy.orm import validates
 from .. import db
 
@@ -13,29 +13,29 @@ class History(db.Model):  # type: ignore
     uploaded_on = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     @validates('id')
-    def valid_id(self, key, id: int):
+    def valid_id(self, _, id: int):
         assert type(id) is int
         return id
 
     @validates('userid')
-    def valid_userid(self, key, userid: int):
+    def valid_userid(self, _, userid: int):
         assert type(userid) is int
         return userid
 
     @validates('filepath')
-    def valid_filepath(self, key, filepath: str):
+    def valid_filepath(self, _, filepath: str):
         assert len(filepath) == 17
         assert filepath[-4:] == '.png'
         assert filepath[:-4].isdigit()
         return filepath
 
     @validates('prediction')
-    def valid_prediction(self, key, prediction: int):
+    def valid_prediction(self, _, prediction: int):
         assert type(prediction) is int
         assert 1 <= prediction <= 13
         return prediction
 
     @validates('probability')
-    def valid_probability(self, key, probability: float):
+    def valid_probability(self, _, probability: float):
         assert 0.0 < probability < 1.0
         return probability

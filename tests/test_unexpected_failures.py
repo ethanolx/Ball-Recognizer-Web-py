@@ -1,7 +1,7 @@
 import os
-import subprocess
 import sys
 import pytest
+import subprocess
 
 
 @pytest.mark.parametrize('constraint', [
@@ -33,16 +33,19 @@ def check_files_recursively(file_structure, previous_dirs=[]):
             current_item = os.path.join(*previous_dirs, item)
             assert os.path.exists(current_item), f'{current_item} does not exist'
 
+
 @pytest.mark.parametrize('root', [
     {
         'application': {
             'controllers': [
                 'api.py',
                 'auth.py',
-                'routes.py'
+                'routes.py',
+                'utils.py'
             ],
             'forms': [
                 '__init__.py',
+                'delete_form.py',
                 'login_form.py',
                 'sign_up_form.py'
             ],
@@ -87,10 +90,6 @@ def check_files_recursively(file_structure, previous_dirs=[]):
                 'layout.html',
                 'login.html',
                 'sign-up.html'
-            ],
-            'utils': [
-                'io_utils.py',
-                'prediction_utils.py'
             ]
         }
     },

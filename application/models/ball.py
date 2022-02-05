@@ -1,7 +1,6 @@
-from sqlalchemy import Integer, Column, String, ForeignKey, DateTime, event
-from sqlalchemy.orm import validates
-from flask_login import UserMixin
-from email_validator import validate_email
+import os
+import glob
+from sqlalchemy import Integer, Column, String, event
 from .. import db
 
 
@@ -10,6 +9,7 @@ class Ball(db.Model):  # type: ignore
     ball_type = Column(String(30), nullable=False)
 
 
+# Insert Supported Classes Upon Database Creation
 @event.listens_for(Ball.__table__, 'after_create')
 def load_default_values(*args, **kwargs):
     balls = [
@@ -32,8 +32,8 @@ def load_default_values(*args, **kwargs):
     db.session.commit()
 
 
+# Clear the Upload Directory Upon Database Creation
 @event.listens_for(Ball.__table__, 'after_create')
 def delete_all_images(*args, **kwargs):
-    import glob, os
     for f in glob.glob('./application/image_storage/*.png'):
         os.remove(f)

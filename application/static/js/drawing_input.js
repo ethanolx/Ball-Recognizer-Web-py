@@ -46,6 +46,7 @@ function begin_paint(ev) {
     CANVAS_CONTEXT.moveTo(ORIGIN_COORDS.x, ORIGIN_COORDS.y);
     CANVAS_CONTEXT.beginPath();
     PAINT_ON = true;
+    DRAWING_PREDICTED = false;
 }
 
 let PAINT_ON = false;

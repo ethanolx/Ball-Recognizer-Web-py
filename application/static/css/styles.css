@@ -1,3 +1,4 @@
+/* General Styles */
 html, body {
     width: 100%;
     height: 100%;
@@ -13,29 +14,12 @@ body {
     padding-bottom: 15vh;
 }
 
-footer {
-    text-align: center;
-    height: 10vh;
-    padding: 5px;
-    bottom: 0px;
+/* Header Styles */
+#result {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.sign_up button {
-    width: 49%;
-}
-
-nav ul>li>a.nav-link {
-    color: rgb(255, 60, 60);
-}
-
-nav a.navbar-brand {
-    color: rgb(255, 60, 60);
-}
-
-div.about-box {
-    border-radius: 20px;
-}
-
+/* List Styles */
 ul {
     padding-left: 0;
 }
@@ -47,6 +31,39 @@ ul>li.alert-danger {
 
 ul.home_menu>li {
     list-style: none;
+}
+
+
+.about-list {
+    list-style-position: inside;
+}
+
+/* Link Styles */
+nav a.navbar-brand {
+    color: rgb(255, 60, 60);
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: rgb(0, 78, 156);
+    background-color: #fdfdfd;
+}
+
+nav.navbar a.nav-link {
+    padding: 0.5rem 0.6rem;
+}
+
+nav ul>li>a.nav-link {
+    color: rgb(255, 60, 60);
+}
+
+nav ul>li>a.logout {
+    color: white;
+    background-color: #444444;
+    border-radius: 0.5rem;
+}
+
+div.about-box {
+    border-radius: 20px;
 }
 
 ul.home_menu a {
@@ -62,18 +79,14 @@ ul.home_menu a:hover {
     color: rgb(0, 128, 255);
 }
 
-table {
-    font-size: smaller;
+ul.nav#prediction-mode .nav-link {
+    color: blueviolet;
+    font-size: larger;
 }
 
-br {
-    display: block;
-    content: "";
-    margin-top: -5px;
-}
-
-.signature {
-    font-size: small;
+/* Button Styles */
+.sign_up button {
+    width: 49%;
 }
 
 .menu-toggle {
@@ -81,7 +94,7 @@ br {
     height: 40%;
 }
 
-
+/* Webcam Styles */
 video#webcam {
     width: 220px;
     height: 220px;
@@ -89,33 +102,12 @@ video#webcam {
     object-fit: cover;
 }
 
-
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    color: rgb(0, 78, 156);
-    background-color: #fdfdfd;
-}
-
-
-nav.navbar a.nav-link {
-    padding: 0.5rem 0.6rem;
-}
-
-nav ul>li>a.logout {
-    color: white;
-    background-color: #444444;
-    border-radius: 0.5rem;
-}
-
 .home_menu {
     display: inline-block;
     width: 100%;
 }
 
-#result {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-
-
+/* Dashboard Styles */
 .plotly-container {
     justify-items: center;
 }
@@ -128,8 +120,10 @@ nav ul>li>a.logout {
     content: ':';
 }
 
-
-ul.nav#prediction-mode .nav-link {
-    color: blueviolet;
-    font-size: larger;
+/* Footer Styles */
+footer {
+    text-align: center;
+    height: 10vh;
+    padding: 5px;
+    bottom: 0px;
 }

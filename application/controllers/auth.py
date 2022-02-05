@@ -1,18 +1,16 @@
-# Application Dependencies
+# Import Dependencies
 import sqlalchemy
 
 from flask import Blueprint, request, flash, redirect, url_for
 from flask.templating import render_template
 from flask_login import login_user
 from flask_login.utils import login_required, logout_user
-
 from werkzeug.security import check_password_hash
 
-# Custom Dependencies
-from .api import get_user
+from .utils import *
 from ..forms.sign_up_form import SignUpForm
 from ..models.user import User
-from .api import add_new_user
+
 
 # Instantiate Blueprint
 auth = Blueprint('auth', __name__)

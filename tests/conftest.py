@@ -1,7 +1,5 @@
 import os
 import shutil
-import pathlib
-from flask import request
 import pytest
 from application import create_app
 
@@ -12,12 +10,6 @@ test_app = create_app(env='testing')
 def app():
     with test_app.app_context():
         yield test_app
-
-
-@pytest.fixture
-def url():
-    with test_app.app_context():
-        return request.url_root
 
 
 @pytest.fixture

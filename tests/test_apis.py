@@ -1,14 +1,9 @@
 import json
-from flask import request, url_for
 import pytest
 from datetime import datetime
 from werkzeug.security import check_password_hash
 from application import DATETIME_FORMAT
-from application.forms.sign_up_form import SignUpForm
-from application.models.user import User
 from email_validator import validate_email
-from PIL import Image
-
 from tests.test_models import test_History_Class
 
 

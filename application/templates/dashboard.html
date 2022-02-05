@@ -15,14 +15,18 @@
             </ul>
         </div>
         <div class="col-12 col-sm">
+            <div class="row">
+                <div class="col-12">
+                    {{ render_flashes() }}
+                </div>
+            </div>
             <div class="row mb-3">
                 <div class="col-12 bg-white">
                     <div id="chart" class="chart w-100"></div>
                 </div>
             </div>
-            {% from "includes/macros.html" import render_card %}
             {% for pred in all_predictions %}
-            {{ render_card(pred.id, url_for('routes.fetch_image', filename=pred.filepath), pred.ball_type.capitalize(), pred.probability, convert_to_local_time(pred.uploaded_on).strftime("%d %b %y %H:%M")) }}
+            {{ render_card(pred.id, url_for('routes.fetch_image', filename=pred.filepath), pred.ball_type.capitalize(), pred.probability, convert_to_local_time(pred.uploaded_on).strftime("%d %b %y %H:%M"), del_form=del_form) }}
             {% endfor %}
         </div>
         <div class="col-lg-1"></div>

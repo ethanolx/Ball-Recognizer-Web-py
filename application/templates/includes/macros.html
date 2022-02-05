@@ -33,7 +33,7 @@
 {% endmacro %}
 
 
-{% macro render_card(pred_id, filepath, prediction, probability, predicted_on) %}
+{% macro render_card(pred_id, filepath, prediction, probability, predicted_on, del_form) %}
 <div class="row">
     <div class="card ball-card {{ prediction.lower().replace(' ', '_') }} bg-dark mb-3 p-1">
         <div class="row">
@@ -58,10 +58,9 @@
                     </div>
                     <div class="col">
                         <form action="/remove" method="post">
+                            {{ del_form.hidden_tag() }}
                             <input type="hidden" name="id" value="{{ pred_id }}">
-                            <button class="btn btn-sm btn-outline-danger pl-3 pr-3" type="submit">
-                                DEL
-                            </button>
+                            {{ del_form.delete(class_='btn btn-sm btn-outline-danger pl-3 pr-3') }}
                         </form>
                     </div>
                 </div>

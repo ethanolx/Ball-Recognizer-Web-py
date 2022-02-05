@@ -1,4 +1,3 @@
-import os
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -12,6 +11,7 @@ ENV = []
 
 
 db = SQLAlchemy()
+
 
 # Application Factory
 def create_app(env='development'):

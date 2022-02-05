@@ -8,3 +8,6 @@ venv/
 
 # VSCode Configuration
 .vscode/
+
+# Temporary Files
+tmp/

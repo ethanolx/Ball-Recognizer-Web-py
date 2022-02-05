@@ -1,15 +1,15 @@
+import re
 from time import time
+from datetime import datetime
 import pytest
 from werkzeug.security import check_password_hash, generate_password_hash
-from datetime import datetime
 from application.models.history import History
 from application.models.user import User
 from application.models.ball import Ball
-import re
+
+
 
 # Ball Class Validation
-
-
 @pytest.mark.parametrize('sample', [
     'Basketball',
     'Soccer ball'
