@@ -2,7 +2,10 @@ import os
 import glob
 import shutil
 
-os.remove('application/database.db')
+shutil.rmtree('application/database.db', ignore_errors=True)
+
+for f in glob.glob('application/images/*.png'):
+    os.remove(f)
 
 for f in glob.glob('**/__pycache__', recursive=True):
-    shutil.rmtree(f)
+    shutil.rmtree(f, ignore_errors=True)

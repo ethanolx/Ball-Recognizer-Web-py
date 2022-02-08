@@ -99,7 +99,6 @@ def check_files_recursively(file_structure, previous_dirs=[]):
             '.gitignore',
             'config_development.cfg',
             'config_production.cfg',
-            'config_staging.cfg',
             'config_testing.cfg'
         ]
     },
@@ -120,7 +119,10 @@ def check_files_recursively(file_structure, previous_dirs=[]):
             'entrypoint.sh',
             'gunicorn_config.py',
             'README.md',
-            'requirements.txt'
+            'requirements.txt',
+            'run_flask.bat',
+            'run_flask.ps1',
+            'run_flask.sh'
         ]
     }
 ])

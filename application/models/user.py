@@ -1,8 +1,9 @@
 from flask_login import UserMixin
-from sqlalchemy import Integer, Column, String
+from sqlalchemy import Integer, Column, String, event
 from sqlalchemy.orm import validates
 from email_validator import validate_email
-from .. import db
+from werkzeug.security import generate_password_hash
+from .. import db, ENV
 
 
 class User(db.Model, UserMixin):  # type: ignore
@@ -27,3 +28,19 @@ class User(db.Model, UserMixin):  # type: ignore
         assert password != '', 'Password cannot be empty'
         assert password is not None, 'Password cannot be null'
         return password
+
+
+# Insert Admin Users Upon Database Creation
+if ENV[0] != 'testing':
+    @event.listens_for(User.__table__, 'after_create')
+    def load_default_values(*args, **kwargs):
+        users = [
+            ('ethan@email.com', 'ethan', generate_password_hash('Et123!@#', method='sha256')),
+            ('joshua@email.com', 'joshua', generate_password_hash('Jy123!@#', method='sha256'))
+        ]
+        for user in users:
+            email, username, password = user
+            db.session.add(User(email=email,
+                                username=username,
+                                password=password))
+        db.session.commit()

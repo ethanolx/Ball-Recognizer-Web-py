@@ -155,7 +155,7 @@ def test_get_prediction_api(client, sample, capsys):
 
         time_diff = uploaded_on - file_name_stamp
         assert time_diff.days == 0
-        assert time_diff.seconds > 0
+        assert time_diff.seconds >= 0
 
         assert result['id'] == sample['id']
         assert result['userid'] == sample['userid']
